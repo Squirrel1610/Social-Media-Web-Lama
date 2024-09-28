@@ -10,8 +10,8 @@ require("./database");
 
 //middleware
 const corsOptions = {
-    origin: 'http://localhost:3000'
-}
+    origin: "http://localhost:3000",
+};
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(helmet());
@@ -24,11 +24,10 @@ const postRoute = require("./routes/posts");
 
 //use router
 app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute);
-app.use("/api/post", postRoute);
-
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
 
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
-})
+});

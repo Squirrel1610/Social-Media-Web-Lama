@@ -1,52 +1,52 @@
 export const Users = [
     {
       id: 1,
-      profilePicture: "assets/thinh.jpg",
+      profilePicture: "thinh.jpg",
       username: "Thinh Nguyen",
     },
     {
       id: 2,
-      profilePicture: "assets/tai.jpg",
+      profilePicture: "tai.jpg",
       username: "Tai Nguyen",
     },
     {
       id: 3,
-      profilePicture: "assets/thainam.jpg",
+      profilePicture: "thainam.jpg",
       username: "Thai Nam",
     },
     {
       id: 4,
-      profilePicture: "assets/thanhtat.jpg",
+      profilePicture: "thanhtat.jpg",
       username: "Thanh Tat",
     },
     {
       id: 5,
-      profilePicture: "assets/tri.jpg",
+      profilePicture: "tri.jpg",
       username: "Tri Du",
     },
     {
       id: 6,
-      profilePicture: "assets/vinh.jpg",
+      profilePicture: "vinh.jpg",
       username: "Hoang Vinh",
     },
     {
       id: 7,
-      profilePicture: "assets/giang.jpg",
+      profilePicture: "giang.jpg",
       username: "Giang Bui",
     },
     {
       id: 8,
-      profilePicture: "assets/hoanganh.jpg",
+      profilePicture: "hoanganh.jpg",
       username: "Hoang Anh",
     },
     {
       id: 9,
-      profilePicture: "assets/giabao.jpg",
+      profilePicture: "giabao.jpg",
       username: "Gia Bao",
     },
     {
       id: 10,
-      profilePicture: "assets/thao.jpg",
+      profilePicture: "thao.jpg",
       username: "Hanh Thao",
     },
   ];
@@ -55,7 +55,7 @@ export const Users = [
     {
       id: 1,
       desc: "Love For All, Hatred For None.",
-      photo: "assets/post1.jpeg",
+      photo: "post1.jpeg",
       date: "5 mins ago",
       userId: 1,
       like: 32,
@@ -63,7 +63,7 @@ export const Users = [
     },
     {
       id: 2,
-      photo: "assets/post2.jpeg",
+      photo: "post2.jpeg",
       date: "15 mins ago",
       userId: 10,
       like: 2,
@@ -72,7 +72,7 @@ export const Users = [
     {
       id: 3,
       desc: "Every moment is a fresh beginning.",
-      photo: "assets/post3.jpeg",
+      photo: "post3.jpeg",
       date: "1 hour ago",
       userId: 3,
       like: 61,
@@ -80,7 +80,7 @@ export const Users = [
     },
     {
       id: 4,
-      photo: "assets/post4.jpg",
+      photo: "post4.jpg",
       date: "4 hours ago",
       userId: 4,
       like: 7,
@@ -88,7 +88,7 @@ export const Users = [
     },
     {
       id: 5,
-      photo: "assets/post5.png",
+      photo: "post5.png",
       date: "5 hours ago",
       userId: 5,
       like: 23,
@@ -97,7 +97,7 @@ export const Users = [
     {
       id: 6,
       desc: "Never regret anything that made you smile.",
-      photo: "assets/post6.jpg",
+      photo: "post6.jpg",
       date: "2 days ago",
       userId: 7,
       like: 52,
