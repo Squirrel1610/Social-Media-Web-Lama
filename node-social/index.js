@@ -4,17 +4,25 @@ const app = express();
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
+const multer = require("multer");
+const path = require("path");
+
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //database
 require("./database");
 
 //middleware
 const corsOptions = {
-    origin: "http://localhost:3000",
+	origin: "http://localhost:3000",
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(helmet());
+app.use(
+	helmet({
+		crossOriginResourcePolicy: false,
+	})
+);
 app.use(morgan("dev"));
 
 //init router
@@ -27,7 +35,25 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "public/images");
+	},
+	filename: function (req, file, cb) {
+		cb(null, req.body.name);
+	},
+});
+const upload = multer({ storage });
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+	try {
+		return res.status(200).json("File has been uploaded");
+	} catch (error) {
+		return res.status(500).json(error.message);
+	}
+});
+
 const port = process.env.PORT;
 app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+	console.log(`Server is listening on port ${port}`);
 });
