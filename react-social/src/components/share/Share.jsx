@@ -3,6 +3,8 @@ import { FaImages, FaTag, FaMapMarkerAlt, FaRegGrin } from "react-icons/fa";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
 
 export default function Share() {
 	const { user } = useContext(AuthContext);
@@ -41,11 +43,13 @@ export default function Share() {
 		<div className="share">
 			<div className="shareWrapper">
 				<div className="shareTop">
-					<img
-						className="shareProfileImg"
-						src={PF + (user.profilePicture || "fb.jpg")}
-						alt=""
-					/>
+					<Link to={`/profile/${user.username}`}>
+						<img
+							className="shareProfileImg"
+							src={PF + (user.profilePicture || "fb.jpg")}
+							alt=""
+						/>
+					</Link>
 					<input
 						placeholder={"What's in your mind?, " + user.username}
 						className="shareInput"
@@ -53,6 +57,12 @@ export default function Share() {
 					/>
 				</div>
 				<hr className="shareHr" />
+				{file && (
+					<div className="shareImgContainer">
+						<img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+						<div className="shareCancelImgBtn" onClick={() => setFile(null)}>X</div>
+					</div>
+				)}
 				<form className="shareBottom" onSubmit={handleSubmit}>
 					<div className="shareOptions">
 						<label htmlFor="file" className="shareOption">
