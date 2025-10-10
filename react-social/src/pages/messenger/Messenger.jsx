@@ -15,7 +15,9 @@ export default function Messenger() {
 	const [messagesOfCurrentChat, setMessagesOfCurrentChat] = useState([]);
 	const [newMessage, setNewMessage] = useState('');
 	const scrollRef = useRef();
-	const [socket, setSocket] = useState(null);
+	const socket = useRef();
+	const [arrivalMessage, setArrivalMessage] = useState(null);
+	const [onlineUsers, setOnlineUsers] = useState([]);
 
 	useEffect(() => {
 		const getConversationOfUser = async () => {
@@ -42,6 +44,13 @@ export default function Messenger() {
 	const handleSubmitNewMessage = async (e) => {
 		e.preventDefault();
 
+		const receiverId = currentChat?.members?.find((u) => u !== user._id);
+		socket.current.emit('sendMessage', {
+			senderId: user._id,
+			receiverId,
+			text: newMessage,
+		});
+
 		const data = {
 			conversationId: currentChat?._id,
 			sender: user._id,
@@ -64,8 +73,28 @@ export default function Messenger() {
 	}, [messagesOfCurrentChat]);
 
 	useEffect(() => {
-		setSocket(io('ws://localhost:5005'));
+		socket.current = io('ws://localhost:5005');
+		socket.current.on('getMessage', (data) => {
+			setArrivalMessage({
+				sender: data.senderId,
+				text: data.text,
+				createdAt: Date.now(),
+			});
+		});
 	}, []);
+
+	useEffect(() => {
+		socket.current?.emit('addUser', user._id);
+		socket.current?.on('getUsers', (users) => {
+			setOnlineUsers(user.followings.filter((f) => users.some((u) => u.userId === f)));
+		});
+	}, [user]);
+
+	useEffect(() => {
+		arrivalMessage &&
+			currentChat?.members.includes(arrivalMessage.sender) &&
+			setMessagesOfCurrentChat([...messagesOfCurrentChat, arrivalMessage]);
+	}, [arrivalMessage]);
 
 	return (
 		<>
@@ -87,8 +116,8 @@ export default function Messenger() {
 							<>
 								<div className='chatBoxTop'>
 									{messagesOfCurrentChat.map((message) => (
-										<div ref={scrollRef}>
-											<Message key={message?._id} message={message} notOwn={message?.sender !== user?._id} />
+										<div key={message?._id} ref={scrollRef}>
+											<Message key={message._id} message={message} notOwn={message?.sender !== user?._id} />
 										</div>
 									))}
 								</div>
@@ -111,7 +140,11 @@ export default function Messenger() {
 				</div>
 				<div className='chatOnline'>
 					<div className='chatOnlineWrapper'>
-						<ChatOnline />
+						<ChatOnline
+							onlineUsers={onlineUsers}
+							currentUser={user._id}
+							setCurrentChat={setCurrentChat}
+						/>
 					</div>
 				</div>
 			</div>
